@@ -6,9 +6,11 @@ import os
 from pathlib import Path
 import numpy as np
 from rich import print
+from rich.progress import track
 import rglob
 import subprocess as sb
 import sys
+from time import sleep
 
 def rel_path(sub=''):
     return os.getcwd() + sub
@@ -37,22 +39,30 @@ def ls(path):
     return list(rglob.rglob(path, "*") + rglob.rglob(path, ".*"))
 
 def ignore(path):
-    return "__pycache__/" in path
+    return "__pycache__" in path
     
+def flatten(S):
+    if S == []:
+        return S
+    if isinstance(S[0], list):
+        return flatten(S[0]) + flatten(S[1:])
+    return S[:1] + flatten(S[1:])
+
 def walk(walk_path):
+
     dirs = lsdir(walk_path)
     files = []
     if (dirs is not None):
-        files = files + [ walk(_dir) for _dir in dirs ]
+        files = files + [ walk(_dir) for _dir in dirs]
+        files = flatten(files)
         
     for file in ls(walk_path):
         files.append(file)
         
-    ary =  np.array(files)
     def only_files(path):
         return os.path.isdir(path)
 
-    return [path for path in list(ary.flatten()) if (not os.path.isdir(path) and not ignore(path))]
+    return [path for path in files if (not os.path.isdir(path) and not ignore(path))]
 
     
 def pkgify(string):
@@ -67,28 +77,28 @@ def read(file):
     return content
         
 def generate(file, content):
-    os.makedirs(Path(file).parent.absolute(), exist_ok=True)
+    # print(Path('/'+file).parent.absolute())
+
+    folder_name = (Path('/'+file).parent.absolute())
+    Path(folder_name).mkdir(parents=True, exist_ok=True)  
     with open(file, "w") as f:
         f.write(content)
+        print(f"Generated {file}")
         f.close()
         
 os.mkdir(pkg)
-os.mkdir(pkg + "/src")
 os.chdir(pkg)
-print(os.getcwd())
 
 files = walk(abs_path('/generator/-_pkg__/'))
-print(files)
+total = len(files)
 
 # sb.call(f"cd {pkg}", shell=True)
 
-for file in files:
-    print(file)
-    # file_name = pkgify(file)
+for file in track(files, description='Generating files'):
     file_name = os.getcwd()+ pkgify(file.split(f"pnpm/generator/", 1)[1]).split(pkg, 1)[1]
-    print(f"generating {file_name}")
     content = pkgify(read(file))
     generate(file_name, content)
+    sleep(.1)
 
 
 def r(command):
@@ -102,8 +112,7 @@ if (pkgmngr == 'yarn'): r("yarn set version berry")
 
 r(f"""
     virtualenv .{pkg}_env
-    mkdir src/icons docs src/styles
-    touch {lock_file} src/index.js 
+    touch {lock_file}
     {pkgmngr} install
     source setup {pkgmngr}
 """)

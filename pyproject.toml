@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pnpm"
-version = "0.2.13"
+version = "0.2.16"
 description = ""
 authors = ["robo-monk <rrobomonk@gmail.com>"]
 
