@@ -67,6 +67,7 @@ def read(file):
     return content
         
 def generate(file, content):
+    os.makedirs(Path(file).parent.absolute(), exist_ok=True)
     with open(file, "w") as f:
         f.write(content)
         f.close()
@@ -102,7 +103,6 @@ if (pkgmngr == 'yarn'): r("yarn set version berry")
 r(f"""
     virtualenv .{pkg}_env
     mkdir src/icons docs src/styles
-    mv index.html docs/index.html
     touch {lock_file} src/index.js 
     {pkgmngr} install
     source setup {pkgmngr}
