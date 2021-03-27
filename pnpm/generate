@@ -29,13 +29,16 @@ else:
 pkg = pkg
 
 def lsdir(folder):
-    return [ f.path for f in os.scandir(folder) if f.is_dir() and "__pycache__"not in f.path ]
+    return [ f.path for f in os.scandir(folder) if f.is_dir() and "__pycache__" not in f.path ]
 
 def ls(path):
     path = Path(path)
     # return [x for x in itertools.chain(path.glob("**/*"), path.glob("**/.*")) if not "__pycache__" in x.name]
     return list(rglob.rglob(path, "*") + rglob.rglob(path, ".*"))
 
+def ignore(path):
+    return "__pycache__/" in path
+    
 def walk(walk_path):
     dirs = lsdir(walk_path)
     files = []
@@ -46,7 +49,11 @@ def walk(walk_path):
         files.append(file)
         
     ary =  np.array(files)
-    return list(ary.flatten())
+    def only_files(path):
+        return os.path.isdir(path)
+
+    return [path for path in list(ary.flatten()) if (not os.path.isdir(path) and not ignore(path))]
+
     
 def pkgify(string):
     return string.replace("-_pkg__art", pkg).replace("-_pkg__", pkg)
