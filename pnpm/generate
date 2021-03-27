@@ -10,6 +10,9 @@ import rglob
 import subprocess as sb
 import sys
 
+def rel_path(sub=''):
+    return os.getcwd() + sub
+
 def abs_path(sub=''):
     return site.getsitepackages()[0] + '/pnpm' + sub
 
@@ -22,7 +25,8 @@ if len(sys.argv) < 2:
 else:
     pkg = sys.argv[1]
     
-pkg = os.getcwd() + '/' + pkg 
+# pkg = os.getcwd() + '/' + pkg 
+pkg = pkg
 
 def lsdir(folder):
     return [ f.path for f in os.scandir(folder) if f.is_dir() and "__pycache__"not in f.path ]
@@ -49,19 +53,21 @@ def pkgify(string):
 
 def read(file):
     content = None
-    with open(abs_path(file), "r") as f:
+    with open(file, "r") as f:
         content = f.read()
         f.close()
         
     return content
         
 def generate(file, content):
-    with open(abs_path(file), "w") as f:
+    with open(file, "w") as f:
         f.write(content)
         f.close()
         
 os.mkdir(pkg)
 os.mkdir(pkg + "/src")
+os.chdir(pkg)
+print(os.getcwd())
 
 files = walk(abs_path('/generator/-_pkg__/'))
 print(files)
@@ -70,7 +76,8 @@ print(files)
 
 for file in files:
     print(file)
-    file_name = pkgify(file)
+    # file_name = pkgify(file)
+    file_name = os.getcwd()+ pkgify(file.split(f"pnpm/generator/", 1)[1]).split(pkg, 1)[1]
     print(f"generating {file_name}")
     content = pkgify(read(file))
     generate(file_name, content)
@@ -79,7 +86,6 @@ for file in files:
 def r(command):
     sb.call(command.strip().replace("\n", " && "), shell=True)
 
-os.chdir(pkg)
 
 pkgmngr = 'yarn'
 lock_file = "yarn.lock" if pkgmngr == 'yarn' else 'package-lock.json'
