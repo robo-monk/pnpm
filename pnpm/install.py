@@ -6,7 +6,7 @@ from pnpm import helpers as hp
 
 # helpers
 def _params(length=3):
-    return " ".join([f"echo ${i}" for i in range(1, length)])
+    return " ".join([f"${i}" for i in range(1, length+1)])
 
 def alias(name, executable, _params_length):
     return "alias " + name + "='() { " + executable + " " + _params(3) + "}'"
