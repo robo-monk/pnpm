@@ -11,14 +11,14 @@ def release():
     sp.call("npm publish", shell=True)
 
 console = _console.Console()
-package_manager = os.environ.get('-_pkg___PKG') or "yarn"
+package_manager = os.environ.get('__pkg___PKG') or "yarn"
 
 
 if len(sys.argv) > 1:
     package_manager = sys.argv[1]
 
 
-os.environ["-_pkg___ENV"] = 'production'
+os.environ["__pkg___ENV"] = 'production'
 sp.call("python watchtower", shell=True)
 
 
@@ -33,7 +33,7 @@ else:
 
 
 # set version
-v = requests.get(f"https://registry.npmjs.org/-_pkg__").json()['dist-tags']['latest']
+v = requests.get(f"https://registry.npmjs.org/__pkg__").json()['dist-tags']['latest']
 console.print(f": Latest version published on npm: {str(v)}", style="dim")
 
 package = {}

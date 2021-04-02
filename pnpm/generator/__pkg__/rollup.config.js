@@ -8,9 +8,9 @@ import json from '@rollup/plugin-json';
 import visualizer from 'rollup-plugin-visualizer'
 import pkg from './package.json';
 
-console.log("[ BUNDLING ] @ ", process.env["-_pkg___ENV"])
+console.log("[ BUNDLING ] @ ", process.env["__pkg___ENV"])
 
-const env = process.env["-_pkg___ENV"]
+const env = process.env["__pkg___ENV"]
 const prod = (env=='production' || env == 'prod')
 
 function ifProd(plug, params){
@@ -23,7 +23,7 @@ const plugs = [
   json(),
   ifProd(visualizer,{
     filename: "docs/stats.html",
-    title: "-_pkg__ Visualised",
+    title: "__pkg__ Visualised",
     sourcemap: false
   })
 ]
@@ -35,12 +35,12 @@ export default [
     input: 'src/index.js',
     //external: ['tippy', 'mousetrap', 'animejs' ],
     output: [{
-      name: '-_pkg__',
+      name: '__pkg__',
       file: pkg.browser,
       format: 'umd'
     }, {
-      name: '-_pkg__',
-      file: "docs/scripts/-_pkg__.umd.js",
+      name: '__pkg__',
+      file: "docs/scripts/__pkg__.umd.js",
       format: 'umd'
     }],
     plugins: [

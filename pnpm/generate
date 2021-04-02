@@ -18,12 +18,15 @@ def rel_path(sub=''):
 def abs_path(sub=''):
     return site.getsitepackages()[0] + '/pnpm' + sub
 
+def inp(msg, style="[bold green]"):
+    print(style + msg)
+    return input("⇝ ")
+
 
 pkg = "untitled"
 
 if len(sys.argv) < 2:
-    print("[bold green] Specify package name: ")
-    pkg = input("- ")
+    pkg = inp("Specify package name:")
 else:
     pkg = sys.argv[1]
     
@@ -66,7 +69,7 @@ def walk(walk_path):
 
     
 def pkgify(string):
-    return string.replace("-_pkg__art", pkg).replace("-_pkg__", pkg)
+    return string.replace("__pkg__art", pkg).replace("__pkg__", pkg)
 
 def read(file):
     content = None
@@ -86,18 +89,23 @@ def generate(file, content):
         print(f"Generated {file}")
         f.close()
         
+def prog(msg):
+    print(f"[{pkg}]: [bold] {msg}")
+
 os.mkdir(pkg)
 os.chdir(pkg)
+prog(f"Created directory /{pkg}")
 
-files = walk(abs_path('/generator/-_pkg__/'))
+files = walk(abs_path('/generator/__pkg__/'))
 total = len(files)
-
+prog(f"Generating {total} files...")
 # sb.call(f"cd {pkg}", shell=True)
 
 for file in track(files, description='Generating files'):
     file_name = os.getcwd()+ pkgify(file.split(f"pnpm/generator/", 1)[1]).split(pkg, 1)[1]
     content = pkgify(read(file))
     generate(file_name, content)
+    prog(f"{file_name}")
     sleep(.1)
 
 
@@ -107,10 +115,14 @@ def r(command):
 
 pkgmngr = 'yarn'
 lock_file = "yarn.lock" if pkgmngr == 'yarn' else 'package-lock.json'
+prog(f"Using {pkgmngr} as package manager, created lockfile [bold green] {lock_file}")
 
 if (pkgmngr == 'yarn'): r("yarn set version berry")
 
+prog(f"Creating virtual environment")
+prog(f"Initializing new git repository")
 r(f"""
+    git init
     virtualenv .{pkg}_env
     touch {lock_file}
     {pkgmngr} install

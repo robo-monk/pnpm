@@ -1,21 +1,21 @@
 {
-    "name": "-_pkg__",
+    "name": "__pkg__",
     "version": "",
-    "description": "-_pkg__ is awesome",
+    "description": "__pkg__ is awesome",
     "license": "MIT",
     "repository": {
         "type": "git",
         "url": "git://github.com/robo-monk/lector.git"
     },
     "source": "src/index.js",
-    "main": "dist/-_pkg__.cjs.js",
-    "module": "dist/-_pkg__.esm.js",
-    "browser": "dist/-_pkg__.umd.js",
+    "main": "dist/__pkg__.cjs.js",
+    "module": "dist/__pkg__.esm.js",
+    "browser": "dist/__pkg__.umd.js",
     "files": [
         "dist/"
     ],
     "keywords": [
-        "-_pkg__"
+        "__pkg__"
     ],
     "devDependencies": {
         "@babel/core": "^7.12.3",

@@ -13,7 +13,7 @@ Hi
 
 ```bash
 git clone git@github.com:robo-monk/lector.git
-cd -_pkg__
+cd __pkg__
 yarn install
 ```
 * Python 3 required (prefferably installed with `brew`)
@@ -35,7 +35,7 @@ source setup npm
 
 ### Use npm or yarn:
 ```bash
-yarn install -_pkg__
+yarn install __pkg__
 ```
 
 ## Set up

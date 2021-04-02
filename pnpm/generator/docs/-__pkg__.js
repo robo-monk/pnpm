@@ -1,1 +1,1 @@
--__pkg__.-__pkg__Test()
+__pkg__.__pkg__Test()

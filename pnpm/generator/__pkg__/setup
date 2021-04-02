@@ -10,7 +10,7 @@ ENV=${2:-$default_env}
 echo "
 welcome to
 
--_pkg___art
+__pkg___art
 
 Setting up using [$PKGM]
 @ [$ENV] environment
@@ -21,7 +21,7 @@ export LECTOR_ENV="$ENV"
 supported_managers=(npm yarn)
 
 if (printf '%s\n' "${supported_managers[@]}" | grep -xq $PKGM); then
-	source "./.-_pkg___env/bin/activate"
+	source "./.__pkg___env/bin/activate"
 	pip install -r .requirements.txt
 	$PKGM install
 	$PKGM run dev
