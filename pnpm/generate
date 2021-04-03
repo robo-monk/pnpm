@@ -11,12 +11,20 @@ import rglob
 import subprocess as sb
 import sys
 from time import sleep
+import re
+from pnpm.helpers import abs_path
+
+# regex = r"Location: ([^ ]+)"
+# _path = sb.check_output("pip3 show pnpm", shell=True).decode('utf-8').replace("\n", " ")
+# _path = re.search(regex, _path).group(1) + "/pnpm"
+
+# def abs_path(sub=''):
+    # return _path  + sub
 
 def rel_path(sub=''):
     return os.getcwd() + sub
 
-def abs_path(sub=''):
-    return site.getsitepackages()[0] + '/pnpm' + sub
+    # return site.getsitepackages()[0] + '/pnpm' + sub
 
 def inp(msg, style="[bold green]"):
     print(style + msg)

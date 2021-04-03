@@ -1,0 +1,23 @@
+#!/usr/local/bin/python3
+
+
+# import subprocess as sp
+# sp.call("source .docs_env/bin/activate", shell=True
+
+import subprocess as sb
+import re
+from sys import argv
+
+regex = r"Location: ([^ ]+)"
+r = sb.check_output("pip3 show pnpm", shell=True).decode('utf-8').replace("\n", " ")
+r = re.search(regex, r).group(1) + "/pnpm"
+
+sb.call(f"python3 {r}/install", shell=True)
+
+print(r)
+params = None
+if len(argv) > 1:
+    params = argv[1]
+
+# print(params)
+

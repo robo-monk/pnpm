@@ -50,12 +50,12 @@
         "pragmajs": "latest"
     },
     "bugs": {
-        "url": "https://github.com/robo-monk/lector/issues"
+        "url": ""
     },
-    "homepage": "https://github.com/robo-monk/lector#readme",
+    "homepage": "",
     "directories": {
         "doc": "docs",
         "test": "test"
     },
-    "author": "daddy"
+    "author": ""
 }

@@ -1,0 +1,122 @@
+#!/usr/bin/python3
+import click
+from rich.console import Console
+import site
+import os
+from os import listdir
+from os.path import isfile, join
+import time
+import subprocess as sb
+from threading import Thread as thr
+from pnpm.helpers import abs_path
+# @click.command()
+# @click.argument('command', required=False)
+# @click.option()
+# def main(command, option):
+    # click.echo(f"{option} {command}")
+
+# if __name__ == "__main__":
+    # main()
+
+tag = "[bold cyan] ▧ \[pnpm] [/bold cyan][#AFAFAF]"
+console = Console()
+def print(*a, **k):
+    console.print(*a, **k)
+
+_benches = {}
+
+def ls_files(path):
+    return [f for f in listdir(path) if isfile(join(path, f))]
+
+def bench(key):
+    _benches[key] = time.time_ns()
+    print(f"\n{tag}{key.capitalize()}\n")
+
+def end(key):
+    if key in _benches:
+        t = time.time_ns() - _benches[key]
+        _benches[key] = None
+        print(f"\n{tag} Done {key} in {round(t/1000000000, 3)} s")
+        return t
+
+def bsh(script):
+    sb.call(f"source {script_path(script)}", shell=True)
+
+def py(script):
+    t = thr(target=_py, args=(script,))
+    t.start()
+    bench(f"running {script}")
+    t.join()
+    end(f"running {script}")
+
+def _py(script):
+    sb.call(f"python3 {script_path(script)}", shell=True)
+
+def script_path(script):
+    return f".pnpm/scripts/{script}"
+
+# def abs_path(sub=''):
+    # return site.getsitepackages()[0] + '/pnpm' + sub
+
+
+# @click.group()
+# def pnpm():
+    # pass
+
+# @pnpm.command()
+# # @click.option('--count', default=1, help='number of greetings')
+# @click.argument('package_name', required=False)
+# def create(package_name):
+    # sb.call(f"python3 {abs_path('/generate')} {package_name or ''}", shell=True)
+
+def show(**k):
+    print(f"{tag} available scripts & recipes:")
+    print("[bold]  " + "\n[bold]  ".join(recipes.keys()))
+    if (os.path.isdir(".pnpm/scripts")): print("  " + "\n  ".join(ls_files(".pnpm/scripts")))
+
+# @pnpm.command()
+def dev(**k):
+    # print(k)
+    bsh('setup')
+    # sb.call(f"source {script_path('setup')}", shell=True)
+    
+# @pnpm.command()
+# def build():
+    # py('build')
+    # # sb.call(f"python3 {script_path('build')}", shell=True)
+
+def create(**k):
+    sb.call(f"python3 {abs_path('/generate')}", shell=True)
+    # py('generate')
+
+# @pnpm.command()
+def release(**kwargs):
+    # # print('yoing')
+    py('build')
+    py('release')
+    # # sb.call(f"python3 {script_path('release')}", shell=True)
+    
+recipes = {
+    "dev": dev,
+    "release": release,
+    "show": show,
+    "create": create
+}
+
+@click.argument('script')
+@click.option('--use', default="yarn", help='select package manager [npm/yarn/yarn2]')
+@click.command()
+def pnpm(script, **kwargs):
+    if os.path.isfile(script_path(script)):
+        py(script)
+    elif script in recipes:
+        bench(f"cooking {script}")
+        recipes[script](**kwargs)
+        end(f"cooking {script}")
+    else:
+        print('could not find', script)
+
+
+if __name__ == '__main__':
+    pnpm()
+

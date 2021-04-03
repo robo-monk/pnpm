@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "pnpm"
-version = "0.2.31"
+version = "0.2.41"
 description = ""
 authors = ["robo-monk <rrobomonk@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.1"
 rich = "^9.13.0"
 numpy = "^1.20.1"
 rglob = "^1.7"
