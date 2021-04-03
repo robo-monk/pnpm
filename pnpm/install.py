@@ -23,6 +23,6 @@ def install():
             
         with open(Path.home() / ".zshrc", 'a') as f:
             path = 'test'
-            executable = f"python3 {hp.abs_path('/cli')}"
+            executable = f"python3 {hp.abs_path('/pnpm')}"
             f.write(alias('pnpm', executable, 5))
             

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+
+echo "
+welcome to
+
+$pkg_art
+		publisher
+"
+
+source "./.$pkg/bin/activate"
+pip install -r .requirements.txt
+yarn install
+
+python .release.py
+
+
+echo "
+Goodbye.
+
+We'll meet again.
+"

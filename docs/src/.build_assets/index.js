@@ -1,6 +1,14 @@
 import * as pragmajs from "pragmajs"
+import * as elements from "../elements/index"
 import styles from "./styles.json"
 import icons from "./icons.json"
+
+const global = { 
+    injectStyle,
+    SVG,
+    compose,
+    elements
+}
 
 function injectStyle(name){
     if (! name in styles) return console.error(`could not find ${name}.scss in docs/src/styles`) 
@@ -8,7 +16,7 @@ function injectStyle(name){
 }
 
 function SVG(name, fill) {
-    if (! name in icons) return console.error(`could not find ${name}.scss in docs/src/styles`)
+    if (! name in icons) return console.error(`could not find ${name}.svg in docs/src/icons`)
     let i = icons[name]
     if (fill) return pragmajs._e(i).css(`fill ${fill}`).html()
     return i
@@ -16,7 +24,6 @@ function SVG(name, fill) {
 
 
 function compose(){
-
     let loader = _e("body").query('[loader]')
     if (loader){
         loader = _e(loader)
@@ -82,8 +89,8 @@ function compose(){
 }
 
 // globalifying pragma, and functions
-for (let [key, val] of Object.entries({ ...pragmajs, ...{ injectStyle, SVG, compose } })) {
+for (let [key, val] of Object.entries({ ...pragmajs, ...global })) {
     window[key] = val
 }
 
-export { icons, styles, SVG, injectStyle, pragmajs, compose }
+export { icons, styles, SVG, injectStyle, pragmajs, compose, elements }

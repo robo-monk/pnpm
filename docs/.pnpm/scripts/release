@@ -1,22 +1,74 @@
-#!/bin/bash
+#!/usr/local/bin/python3
+pkg_name = "docs"
+
+import subprocess as sp
+sp.call(f"source .{pkg_name}_env/bin/activate", shell=True)
+
+import requests
+import json
+import os
+import sys
+from rich import console as _console, print, inspect
 
 
-echo "
-welcome to
+def run(script):
+    sp.call(f"python3 .pnpm/scripts/{script}", shell=True)
 
-$pkg_art
-		publisher
-"
+def release():
+    sp.call("npm publish", shell=True)
 
-source "./.$pkg/bin/activate"
-pip install -r .requirements.txt
-yarn install
-
-python .release.py
+console = _console.Console()
+package_manager = os.environ.get(f"{pkg_name}_PKG") or "yarn"
 
 
-echo "
-Goodbye.
+if len(sys.argv) > 1:
+    package_manager = sys.argv[1]
 
-We'll meet again.
-"
+
+os.environ[f"{pkg_name}_ENV"] = 'production'
+run('build')
+# sp.call("python watchtower", shell=True)
+
+
+# test
+
+proc = sp.Popen("yarn test", stdout=sp.PIPE, shell=True)
+streamdata = proc.communicate()[0]
+if (proc.returncode == 0):
+    print(f"\n\n[italic green] Tests passed!  [/italic green] \n\n")
+else:
+    print(f"\n\n[bold red] Tests failed!!!!  [/bold red] \n\n")
+
+
+# set version
+v = requests.get(f"https://registry.npmjs.org/{pkg_name}").json()['dist-tags']['latest']
+console.print(f": Latest version published on npm: {str(v)}", style="dim")
+
+package = {}
+with open('package.json', 'r') as f:
+    package = json.load(f)
+
+
+pv = package['version']
+
+tag = "bold green" if str(v) == str(pv) else "bold yellow"
+console.print(f": Current local version: {pv}", style=tag)
+
+print(f"[bold]\n\n Input new version please: [/bold]")
+new_version = input("⇝ ")
+
+if len(new_version) ==  0:
+    new_version = pv
+
+print(f"[italic]  Confirm publish this as version: {new_version} ?")
+if input(f"[y/n] ⇝ ") == 'y':
+    package['version'] = new_version
+    with open('package.json', 'w') as outfile:
+        json.dump(package, outfile, indent=4)
+
+    release()
+    print("\n [bold green] Package published succesfully to the NPM repository.")
+else:
+    print('\n[bold red] Aborted')
+
+

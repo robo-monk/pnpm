@@ -3,7 +3,7 @@
 
 ## Install with `zsh`
 ```
-curl -sSL https://raw.githubusercontent.com/robo-monk/pnpm/master/copy%2Bpaste.py | python - && zsh
+curl -sSL https://raw.githubusercontent.com/robo-monk/pnpm/master/copy%2Bpaste.py | python3 - && zsh
 ```
 
 ## Generate new package
