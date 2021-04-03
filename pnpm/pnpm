@@ -72,7 +72,7 @@ def script_path(script):
 def show(**k):
     print(f"{tag} available scripts & recipes:")
     print("[bold]  " + "\n[bold]  ".join(recipes.keys()))
-    print("  " + "\n  ".join(ls_files(".pnpm/scripts")))
+    if (os.path.isdir(".pnpm/scripts")): print("  " + "\n  ".join(ls_files(".pnpm/scripts")))
 
 # @pnpm.command()
 def dev(**k):
