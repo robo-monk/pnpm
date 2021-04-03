@@ -45,9 +45,17 @@ function compose(){
         for (let [key, element] of pragmas) {
             _page.adopt(
                 _p(key)
-                    .as(element.setId(key))
+                    .as(element)
                     .run(function() {
-                        _page[util.snake2camel(key)] = this
+                        key = util.snake2camel(key)
+                        if (key in _page) {
+                            console.log(key)
+                            if (Array.isArray(_page[key])) return _page[key] = _page[key].push(this)
+                            _page[key] = [_page[key], this]
+                            return 
+                        }
+
+                        _page[key] = this
                     })
             )
         }

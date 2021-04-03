@@ -11,10 +11,23 @@
 <body>
 
     <div class='flex-center page-container' pragma #display-wrapper>
-        <h1> Hello, docs </h1>
-        <p> Yes this works </p>
+        <h1> PNPM </h1>
+        <p>Pragmatic Node PNPM Manager </p>
+
+        <pre pragma #code>
+            
+        </pre>
+
+        <pre pragma #code>
+pnpm create my-package
+cd my-package
+pnpm dev
+pnpm release
+        </pre>
+
 
         <div pragma #display></div>
+        
     </div>
 
     <div loader data-transition=.3 style="position: absolute;
@@ -24,6 +37,9 @@
         z-index: 99999999999;
         background: #161616;
     "></div>
+    
+    <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@10.7.1/styles/ocean.min.css">
+    <script src="//unpkg.com/@highlightjs/cdn-assets@10.7.1/highlight.min.js"></script>
     
     <script src="docs/scripts/docs.umd.js"></script>
     <script src="docs/docs_demo.js"></script>

@@ -23,3 +23,9 @@ _page.display
         }, 420+69);
     })
     .setIcon(0)
+
+_page.code.forEach(code => {
+    code.html(code.element.html().toString().trim())
+    code.element.attr('language', 'javascript')
+    hljs.highlightElement(code.element)
+})
