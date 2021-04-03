@@ -85,6 +85,10 @@ def dev(**k):
     # py('build')
     # # sb.call(f"python3 {script_path('build')}", shell=True)
 
+def create(**k):
+    sb.call(f"python3 {abs_path('/generate')}", shell=True)
+    # py('generate')
+
 # @pnpm.command()
 def release(**kwargs):
     # # print('yoing')
@@ -95,7 +99,8 @@ def release(**kwargs):
 recipes = {
     "dev": dev,
     "release": release,
-    "show": show
+    "show": show,
+    "create": create
 }
 
 @click.argument('script')
@@ -105,7 +110,9 @@ def pnpm(script, **kwargs):
     if os.path.isfile(script_path(script)):
         py(script)
     elif script in recipes:
+        bench(f"cooking {script}")
         recipes[script](**kwargs)
+        end(f"cooking {script}")
     else:
         print('could not find', script)
 
