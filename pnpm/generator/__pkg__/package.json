@@ -1,6 +1,6 @@
 {
     "name": "__pkg__",
-    "version": "",
+    "version": "0.0.1",
     "description": "__pkg__ is awesome",
     "license": "MIT",
     "repository": {
@@ -47,6 +47,7 @@
         "lint": "yarn run eslint src"
     },
     "dependencies": {
+        "pragmajs": "latest"
     },
     "bugs": {
         "url": "https://github.com/robo-monk/lector/issues"

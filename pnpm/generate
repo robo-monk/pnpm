@@ -21,18 +21,7 @@ def abs_path(sub=''):
 def inp(msg, style="[bold green]"):
     print(style + msg)
     return input("⇝ ")
-
-
-pkg = "untitled"
-
-if len(sys.argv) < 2:
-    pkg = inp("Specify package name:")
-else:
-    pkg = sys.argv[1]
     
-# pkg = os.getcwd() + '/' + pkg 
-pkg = pkg
-
 def lsdir(folder):
     return [ f.path for f in os.scandir(folder) if f.is_dir() and "__pycache__" not in f.path ]
 
@@ -92,8 +81,21 @@ def generate(file, content):
 def prog(msg):
     print(f"[{pkg}]: [bold] {msg}")
 
+
+pkg = "untitled"
+
+if len(sys.argv) < 2:
+    pkg = inp("Specify package name:")
+else:
+    pkg = sys.argv[1]
+    
+# pkg = os.getcwd() + '/' + pkg 
+pkg = pkg
+
+
 os.mkdir(pkg)
 os.chdir(pkg)
+
 prog(f"Created directory /{pkg}")
 
 files = walk(abs_path('/generator/__pkg__/'))
@@ -106,7 +108,7 @@ for file in track(files, description='Generating files'):
     content = pkgify(read(file))
     generate(file_name, content)
     prog(f"{file_name}")
-    sleep(.1)
+    sleep(.02)
 
 
 def r(command):
@@ -126,6 +128,6 @@ r(f"""
     virtualenv .{pkg}_env
     touch {lock_file}
     {pkgmngr} install
-    source setup {pkgmngr}
+    pnpm build 
 """)
 

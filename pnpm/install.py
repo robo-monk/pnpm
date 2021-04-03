@@ -9,7 +9,7 @@ def _params(length=3):
     return " ".join([f"${i}" for i in range(1, length+1)])
 
 def alias(name, executable, _params_length):
-    return "alias " + name + "='() { " + executable + " " + _params(3) + "}'"
+    return "alias " + name + "='() { " + executable + " " + _params(_params_length) + "}'"
 
 def install():
     print("Installing pnpm...")
@@ -23,6 +23,6 @@ def install():
             
         with open(Path.home() / ".zshrc", 'a') as f:
             path = 'test'
-            executable = f"python3 {hp.abs_path('/generate')}"
+            executable = f"python3 {hp.abs_path('/cli')}"
             f.write(alias('pnpm', executable, 5))
             

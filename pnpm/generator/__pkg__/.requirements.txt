@@ -6,3 +6,4 @@ Pygments==2.8.1
 rich==9.13.0
 six==1.15.0
 typing-extensions==3.7.4.3
+click = 7.1.2

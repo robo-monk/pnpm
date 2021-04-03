@@ -1,0 +1,46 @@
+#!/usr/bin/python3
+import click
+import site
+import subprocess as sb
+
+# @click.command()
+# @click.argument('command', required=False)
+# @click.option()
+# def main(command, option):
+    # click.echo(f"{option} {command}")
+
+# if __name__ == "__main__":
+    # main()
+
+def script_path(script):
+    return f".pnpm/scripts/{script}"
+
+def abs_path(sub=''):
+    return site.getsitepackages()[0] + '/pnpm' + sub
+
+
+@click.group()
+def cli():
+    pass
+
+@cli.command()
+# @click.option('--count', default=1, help='number of greetings')
+@click.argument('package_name', required=False)
+def create(package_name):
+    sb.call(f"python3 {abs_path('/generate')} {package_name or ''}", shell=True)
+
+@cli.command()
+def dev():
+    sb.call(f"source {script_path('setup')}", shell=True)
+    
+@cli.command()
+def build():
+    sb.call(f"source {script_path('build')}", shell=True)
+
+@cli.command()
+def release():
+    build()
+    sb.call(f"python3 {script_path('.release.py')}", shell=True)
+    
+if __name__ == '__main__':
+    cli()

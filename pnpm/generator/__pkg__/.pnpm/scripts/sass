@@ -23,7 +23,7 @@ console.print(f"[bold]Compiling styles... [/bold]")
 path = 'src/styles'
 jayson_name = "styles"
 
-jayson_fn = f"{path}/{jayson_name}.json"
+jayson_fn = f"src/.build_assets/{jayson_name}.json"
 
 files = [ f for f in glob.glob(f"{path}/*.*css") ]
 jayson = {}
