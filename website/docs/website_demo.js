@@ -1,21 +1,21 @@
-__pkg__.compose() // creates the _page object with all the pragmas defined in the html
-__pkg__.injectStyle('main')
+website.compose() // creates the _page object with all the pragmas defined in the html
+website.injectStyle('main')
 
-console.log(__pkg__.displayWrapper)
-console.log(__pkg__.display)
+console.log(website.displayWrapper)
+console.log(website.display)
 
 _page.display
     .css("height 250px")
     .createWire('icon')
     .on('iconChange', function (v) {
         if (this._last) this._last.destroy()
-        this._last = _e(__pkg__.icons[this._icons[v]])
+        this._last = _e(website.icons[this._icons[v]])
             .addClass('fade-onload')
             .css('fill whitesmoke')
             .appendTo(this)
     })
     .run(function () {
-        this._icons = Object.keys(__pkg__.icons)
+        this._icons = Object.keys(website.icons)
         this.setIconLoop(0, this._icons.length - 1)
         setInterval(() => {
             this.icon++

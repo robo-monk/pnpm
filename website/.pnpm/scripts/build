@@ -9,7 +9,7 @@ final = "src/.build_assets/icons.json"
 icons_dir = "src/icons"
 
 icona_repo = "git@github.com:robo-monk/ICONA.git"
-package_manager = os.environ.get('__pkg___PKG') or "yarn"
+package_manager = os.environ.get('website_PKG') or "yarn"
 
 if not os.path.isdir(".pnpm/icona"):
     subprocess.call(f"git clone {icona_repo} .pnpm/icona", shell=True)
