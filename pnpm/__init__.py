@@ -8,5 +8,4 @@ def whoisthis():
 
 def _install():
     i.install()
-# def install():
-    # i.install()
+    

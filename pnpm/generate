@@ -128,6 +128,6 @@ r(f"""
     virtualenv .{pkg}_env
     touch {lock_file}
     {pkgmngr} install
-    pnpm build 
 """)
 
+prog(f"\n\n Done generating {pkg}!")
