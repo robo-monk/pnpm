@@ -5,20 +5,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>website</title>
+    <title>docs</title>
 </head>
 
 <body>
 
     <div class='flex-center page-container' pragma #display-wrapper>
-        <h1> Hello, website </h1>
+        <h1> Hello, docs </h1>
         <p> Yes this works </p>
 
         <div pragma #display></div>
     </div>
 
-    <script src="scripts/website.umd.js"></script>
-    <script src="website_demo.js"></script>
+    <div loader data-transition=.3 style="position: absolute;
+        width: 100vw;
+        height: 100vh;
+        top: 0; left: 0; 
+        z-index: 99999999999;
+        background: #161616;
+    "></div>
+    
+    <script src="docs/scripts/docs.umd.js"></script>
+    <script src="docs/docs_demo.js"></script>
 </body>
 
 </html>

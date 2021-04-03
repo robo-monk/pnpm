@@ -1,8 +1,8 @@
 __pkg__.compose() // creates the _page object with all the pragmas defined in the html
 __pkg__.injectStyle('main')
 
-console.log(__pkg__.displayWrapper)
-console.log(__pkg__.display)
+console.log(_page.displayWrapper)
+console.log(_page.display)
 
 _page.display
     .css("height 250px")

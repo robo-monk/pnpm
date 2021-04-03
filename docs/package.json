@@ -1,21 +1,21 @@
 {
-    "name": "website",
+    "name": "docs",
     "version": "0.0.1",
-    "description": "website is awesome",
+    "description": "docs is awesome",
     "license": "MIT",
     "repository": {
         "type": "git",
         "url": "git://github.com/robo-monk/lector.git"
     },
     "source": "src/index.js",
-    "main": "dist/website.cjs.js",
-    "module": "dist/website.esm.js",
-    "browser": "dist/website.umd.js",
+    "main": "dist/docs.cjs.js",
+    "module": "dist/docs.esm.js",
+    "browser": "dist/docs.umd.js",
     "files": [
         "dist/"
     ],
     "keywords": [
-        "website"
+        "docs"
     ],
     "devDependencies": {
         "@babel/core": "^7.12.3",

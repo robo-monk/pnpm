@@ -8,9 +8,9 @@ import json from '@rollup/plugin-json';
 import visualizer from 'rollup-plugin-visualizer'
 import pkg from './package.json';
 
-console.log("[ BUNDLING ] @ ", process.env["website_ENV"])
+console.log("[ BUNDLING ] @ ", process.env["docs_ENV"])
 
-const env = process.env["website_ENV"]
+const env = process.env["docs_ENV"]
 const prod = (env=='production' || env == 'prod')
 
 function ifProd(plug, params){
@@ -23,7 +23,7 @@ const plugs = [
   json(),
   ifProd(visualizer,{
     filename: "docs/stats.html",
-    title: "website Visualised",
+    title: "docs Visualised",
     sourcemap: false
   })
 ]
@@ -35,12 +35,12 @@ export default [
     input: 'src/index.js',
     //external: ['tippy', 'mousetrap', 'animejs' ],
     output: [{
-      name: 'website',
+      name: 'docs',
       file: pkg.browser,
       format: 'umd'
     }, {
-      name: 'website',
-      file: "docs/scripts/website.umd.js",
+      name: 'docs',
+      file: "docs/scripts/docs.umd.js",
       format: 'umd'
     }],
     plugins: [

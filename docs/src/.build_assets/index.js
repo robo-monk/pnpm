@@ -3,12 +3,12 @@ import styles from "./styles.json"
 import icons from "./icons.json"
 
 function injectStyle(name){
-    if (! name in styles) return console.error(`could not find ${name}.scss in website/src/styles`) 
+    if (! name in styles) return console.error(`could not find ${name}.scss in docs/src/styles`) 
     pragmajs.util.addStyles(styles[name])
 }
 
 function SVG(name, fill) {
-    if (! name in icons) return console.error(`could not find ${name}.scss in website/src/styles`)
+    if (! name in icons) return console.error(`could not find ${name}.scss in docs/src/styles`)
     let i = icons[name]
     if (fill) return pragmajs._e(i).css(`fill ${fill}`).html()
     return i
@@ -16,8 +16,25 @@ function SVG(name, fill) {
 
 
 function compose(){
+
+    let loader = _e("body").query('[loader]')
+    if (loader){
+        loader = _e(loader)
+        let transitionTime = parseFloat(loader.getData("transition")) || 0.2
+
+        loader.css(`
+            transition all ${transitionTime}s ease
+        `)
+
+        pragmaSpace.onDocLoad(() => {
+            loader.css('opacity 0')
+            setTimeout(() => {
+                loader.hide()
+            }, transitionTime * 1000)
+        })
+    }
     let _page = _p().as('body')
-    console.time()
+    console.time("load time")
     _page.element.findAll("[pragma]").forEach(element => {
         let pragmas = new Map
 
@@ -33,8 +50,6 @@ function compose(){
                         _page[util.snake2camel(key)] = this
                     })
             )
-
-            console.timeLog()
         }
         
     })
@@ -54,7 +69,7 @@ function compose(){
         }
     })
 
-    console.timeEnd()
+    console.timeEnd("load time")
     window._page = _page
 }
 
