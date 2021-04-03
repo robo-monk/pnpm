@@ -2,13 +2,13 @@
 
 
 ```
-curl ...
+curl -sSL https://raw.githubusercontent.com/robo-monk/pnpm/master/copy%2Bpaste.py | python -
 ```
 
 # Generate new package
 
 ```
-pnpm create
+pnpm create package
 ```
 > and add information via the prompts
 
@@ -16,12 +16,11 @@ pnpm create
 # To dev the package
 
 ```
-cd in the package
-source setup
+cd package
+pnpm dev
 ```
 
 # To release the package
-
 ```
-source release
+pnpm release
 ```
