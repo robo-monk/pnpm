@@ -5,11 +5,12 @@ description = ""
 authors = ["robo-monk <rrobomonk@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.1"
+python = "^3.6"
 rich = "^9.13.0"
 numpy = "^1.20.1"
 rglob = "^1.7"
 click = "^7.1.2"
+PyYAML = "^5.4.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
