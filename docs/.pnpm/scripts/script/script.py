@@ -1,7 +1,8 @@
 import subprocess as sb
 import sys
 import json
-from config import config
+from script import config
+# from config import config
 import os
 
 _params = json.loads(sys.argv[1]) if len(sys.argv)>1 else {}

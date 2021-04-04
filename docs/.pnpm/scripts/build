@@ -9,8 +9,7 @@ import subprocess as sp
 import os
 import sys
 from rich import print
-from _script import config, params, pkg_manager
-
+from script import config, params, pkg_manager
 
 
 print("configureation is", config)

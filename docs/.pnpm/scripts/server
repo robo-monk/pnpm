@@ -1,23 +1,22 @@
 #!/usr/local/bin/python3
 
+from flask import Flask, render_template, send_file
+app = Flask(__name__, template_folder="../../", static_folder="../../")
 
-# import subprocess as sp
-# sp.call("source .docs_env/bin/activate", shell=True
-
-import subprocess as sb
-import re
-from sys import argv
-
-regex = r"Location: ([^ ]+)"
-r = sb.check_output("pip3 show pnpm", shell=True).decode('utf-8').replace("\n", " ")
-r = re.search(regex, r).group(1) + "/pnpm"
-
-sb.call(f"python3 {r}/install", shell=True)
-
-print(r)
-params = None
-if len(argv) > 1:
-    params = argv[1]
-
-# print(params)
-
+@app.route('/')
+def index():
+    return render('index')
+          
+@app.route("/<file>")
+def render(file):
+    if "favicon" in file: return "<>"
+    return render_template(f"{file}.html")
+          
+@app.route("/docs/<a>")
+@app.route("/docs/<a>/<b>")
+@app.route("/docs/<a>/<b>/<c>")
+def serve(**e):
+    return send_file("../../docs/" + "/".join(e.values()))
+          
+if __name__ == '__main__':
+    app.run(debug=True)
