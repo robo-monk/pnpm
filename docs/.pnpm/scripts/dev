@@ -1,0 +1,20 @@
+#!/usr/local/bin/python3
+# arguments: -c
+
+import subprocess as sp
+from config import config
+# sp.call("source .docs_env/bin/activate", shell=True)
+
+import os
+import sys
+from rich import print
+from _script import config, params, env, pkg_manager
+
+
+
+print("configureation is", config())
+print('using', pkg_manager)
+# print("params are", params())
+# print('environment is ', params('env') or "dev")
+# env = params('env') or "dev"
+# pkg_manager = params('use') or config('package_manager')

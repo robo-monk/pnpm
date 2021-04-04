@@ -2,8 +2,9 @@
 pkg_name = "docs"
 
 import subprocess as sp
-sp.call(f"source .{pkg_name}_env/bin/activate", shell=True)
 
+
+from _script import config
 import requests
 import json
 import os

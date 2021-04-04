@@ -2,12 +2,19 @@
 # arguments: -c
 
 import subprocess as sp
-sp.call("source .docs_env/bin/activate", shell=True)
+# from config import config
+# sp.call("source .docs_env/bin/activate", shell=True)
 
 
 import os
 import sys
 from rich import print
+from _script import config, params, pkg_manager
+
+
+
+print("configureation is", config)
+print("params are", params())
 
 def run(sub):
     sp.call(f"python3 .pnpm/{sub}", shell=True)
@@ -15,7 +22,7 @@ def run(sub):
 final = "src/.build_assets/icons.json"
 icons_dir = "src/icons"
 
-package_manager = os.environ.get('docs_PKG') or "yarn"
+package_manager = pkg_manager
 
 if not os.path.isdir(".pnpm/icona"):
     icona_repo = "git@github.com:robo-monk/ICONA.git"
@@ -29,12 +36,8 @@ run(f"icona/icona {icons_dir}")
 sp.call(f"mv {icons_dir}.json {final}", shell=True)
 # subprocess.call(f"python .pnpm/icona/icona {icons_dir}", shell=True)
 
-if len(sys.argv) > 1:
-    package_manager = sys.argv[1]
-
 print(f"\n\n[bold cyan] Bundling with package manager: {package_manager} [/bold cyan] \n\n")
 # subprocess.call("python3 .pnpm/scripts/sass", shell=True)
 run(f"scripts/sass")
-
 sp.call(f"{package_manager} run build", shell=True)
 
