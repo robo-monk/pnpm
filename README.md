@@ -1,5 +1,9 @@
 # pnpm - Pragmatic Node PNPM Manager
 
+## Requirements:
+- Python 3
+- Node.js
+- npm/yarn
 
 ## Install with `zsh`
 ```
