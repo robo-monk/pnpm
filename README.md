@@ -3,7 +3,7 @@
 ## Requirements:
 - Python 3
 - Node.js
-- npm/yarn
+- npm/yarn/yarn2
 
 ## Install with `zsh`
 ```
