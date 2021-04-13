@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import click
 from rich.console import Console
+from rich import inspect
 import site
 import os
 from os import listdir
@@ -27,11 +28,21 @@ def print(*a, **k):
 
 _benches = {}
 
-def run(cmd):
-    sb.call(cmd, shell=True)
 def popen(cmd):
-    proc = sb.Popen(cmd, stdout=sb.PIPE, shell=True)
-    return proc.communicate()[0] == 0
+    with console.status(f"Running [italic bold]{cmd}...", spinner="arrow3", spinner_style="cyan") as status:
+        try:
+            proc = sb.check_output(cmd, shell=True)
+        except:
+            return False
+            pass
+        proc = proc.decode()
+        console.log(proc)
+        return True
+
+def merge(x, y):
+    z = x.copy()   # start with x's keys and values
+    z.update(y)    # modifies z with y's keys and values & returns None
+    return z
 
 def ls_files(path):
     return [f for f in listdir(path) if isfile(join(path, f))]
@@ -90,8 +101,14 @@ def show(**k):
 def dev(**k):
     # print(k)
     # bsh('setup')
-    py_thread('dev', **k)
-    py_thread("est:wath")
+    p1 = py_thread('dev', **k)
+    p2 = py_thread('server')
+
+    p2.join()
+    p1.join()
+
+
+    # py_thread("est:wath")
     # sb.call(f"source {script_path('setup')}", shell=True)
     
 # @pnpm.command()
@@ -117,23 +134,49 @@ recipes = {
     "create": create
 }
 
-@click.argument("args", required=False, nargs=-1)
+from functools import reduce
+# @click.argument("args", required=False, nargs=-1)
 @click.argument('script')
 @click.option('--use', default="yarn", help='select package manager [npm/yarn/yarn2]')
 @click.option('--reload', "-r", is_flag=True, help='use package manager to re-install dependencies')
-@click.command()
-def pnpm(script, args, **kwargs):
-    
+@click.command(context_settings=dict(allow_extra_args=True, ignore_unknown_options=True))
+@click.pass_context
+def pnpm(ctx, script, **kwargs):
+    # r = reduce(lambda a, b: a + [b, True] if b.startswith('-') else a + [a[-1], b], ctx.args, [])
+    passed_kwargs = dict()
+    for i, e in enumerate(ctx.args):
+        if (e.startswith('-')):
+            passed_kwargs[e] = True
+        elif not ctx.args[i-1].startswith('-'):
+            passed_kwargs[str(i)] = e
+        else:
+            passed_kwargs[ctx.args[i-1]] = e
+
+
+    ctx = " ".join(ctx.args)
+
     bench(f"running {script}")
+
+    global file
+    file = script_path(script)
+    def find_file():
+        global file
+        if not os.path.isfile(file):
+            file = None
+
+    find_file_thread = thr(target=find_file)
+    find_file_thread.start()
+
     failed = False
+
+    kwargs = merge(passed_kwargs, kwargs)
     if script in recipes:
         recipes[script](**kwargs)
-    elif os.path.isfile(script_path(script)):
+    elif find_file_thread.join() or file is not None:
         py(script, **kwargs)
     else:
-        _cmd = f"{kwargs['use']} {script} {' '.join(args)}" # eg. yarn add params
-        print(_cmd)
-        failed = not run(_cmd)
+        _cmd = f"{kwargs['use']} {script} {ctx}"
+        failed = not popen(_cmd)
 
     if failed:
         fail(f"running {script}")

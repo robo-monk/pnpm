@@ -1,1 +1,6 @@
-package_manager: yarn
+manager: __pkg_manager__
+
+package_npm_name: __pkg__
+package_name: __pkg__
+
+test?: no # or yes

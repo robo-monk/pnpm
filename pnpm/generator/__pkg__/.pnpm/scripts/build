@@ -1,42 +1,31 @@
 #!/usr/local/bin/python3
 
-import subprocess as sp
-
-pkg_name = "__pkg__"
-sp.call(f"source .{pkg_name}_env/bin/activate", shell=True)
-
-import os
-import sys
-from rich import print
-
-
+from script import * 
 
 def run(sub):
-    sp.call(f"python3 .pnpm/{sub}", shell=True)
+    sb.call(f"python3 .pnpm/{sub}", shell=True)
 
 final = "src/.build_assets/icons.json"
 icons_dir = "src/icons"
 
-package_manager = os.environ.get(f"{pkg_name}_PKG") or "yarn"
+package_manager = pkg_manager
 
 if not os.path.isdir(".pnpm/icona"):
     icona_repo = "git@github.com:robo-monk/ICONA.git"
-    sp.call(f"git clone {icona_repo} .pnpm/icona", shell=True)
+    shell(f"git clone {icona_repo} .pnpm/icona")
 
 
 # build icons
-print(f" [bold] Bundling icons... [/bold]")
+c = spawn(f"Bundling icons...")
 
 run(f"icona/icona {icons_dir}")
-sp.call(f"mv {icons_dir}.json {final}", shell=True)
+shell(f"mv {icons_dir}.json {final}")
+c.done()
 # subprocess.call(f"python .pnpm/icona/icona {icons_dir}", shell=True)
 
-if len(sys.argv) > 1:
-    package_manager = sys.argv[1]
-
-print(f"\n\n[bold cyan] Bundling with package manager: {package_manager} [/bold cyan] \n\n")
+c = spawn(f"Bundling with {package_manager}...")
 # subprocess.call("python3 .pnpm/scripts/sass", shell=True)
 run(f"scripts/sass")
+shell(f"{package_manager} run build")
 
-sp.call(f"{package_manager} run build", shell=True)
-
+c.done()

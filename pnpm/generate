@@ -66,7 +66,7 @@ def walk(walk_path):
 
     
 def pkgify(string):
-    return string.replace("__pkg__art", pkg).replace("__pkg__", pkg)
+    return string.replace("__pkg_manager__", pkgmngr).replace("__pkg__art", pkg).replace("__pkg__", pkg)
 
 def read(file):
     content = None
@@ -91,6 +91,7 @@ def prog(msg):
 
 
 pkg = "untitled"
+pkgmngr = inp("Specify package manager:") 
 
 if len(sys.argv) < 2:
     pkg = inp("Specify package name:")
@@ -98,8 +99,6 @@ else:
     pkg = sys.argv[1]
     
 # pkg = os.getcwd() + '/' + pkg 
-pkg = pkg
-
 
 os.mkdir(pkg)
 os.chdir(pkg)
@@ -123,7 +122,7 @@ def r(command):
     sb.call(command.strip().replace("\n", " && "), shell=True)
 
 
-pkgmngr = 'yarn'
+
 lock_file = "yarn.lock" if pkgmngr == 'yarn' else 'package-lock.json'
 prog(f"Using {pkgmngr} as package manager, created lockfile [bold green] {lock_file}")
 
