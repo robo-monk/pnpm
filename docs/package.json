@@ -1,6 +1,6 @@
 {
     "name": "docs",
-    "version": "8",
+    "version": "0.4.1",
     "description": "docs is awesome",
     "license": "MIT",
     "repository": {
@@ -45,9 +45,6 @@
         "dev": "nodemon -w 'src/' -e css,scss,js,svg --exec python3 .pnpm/scripts/build",
         "dev-rollup": "rollup -c -w",
         "lint": "yarn run eslint src"
-    },
-    "dependencies": {
-        "pragmajs": "latest"
     },
     "bugs": {
         "url": "https://github.com/robo-monk/lector/issues"

@@ -27,6 +27,8 @@ def print(*a, **k):
 
 _benches = {}
 
+def run(cmd):
+    sb.call(cmd, shell=True)
 def popen(cmd):
     proc = sb.Popen(cmd, stdout=sb.PIPE, shell=True)
     return proc.communicate()[0] == 0
@@ -115,11 +117,12 @@ recipes = {
     "create": create
 }
 
+@click.argument("args", required=False, nargs=-1)
 @click.argument('script')
 @click.option('--use', default="yarn", help='select package manager [npm/yarn/yarn2]')
 @click.option('--reload', "-r", is_flag=True, help='use package manager to re-install dependencies')
 @click.command()
-def pnpm(script, **kwargs):
+def pnpm(script, args, **kwargs):
     
     bench(f"running {script}")
     failed = False
@@ -128,8 +131,9 @@ def pnpm(script, **kwargs):
     elif os.path.isfile(script_path(script)):
         py(script, **kwargs)
     else:
-        _cmd = f"{kwargs['use']} {script}"
-        failed = not popen(_cmd)
+        _cmd = f"{kwargs['use']} {script} {' '.join(args)}" # eg. yarn add params
+        print(_cmd)
+        failed = not run(_cmd)
 
     if failed:
         fail(f"running {script}")

@@ -3663,7 +3663,7 @@ jest-worker@^26.2.1, jest-worker@^26.6.2:
 
 jest@^26.6.3:
   version "26.6.3"
-  resolved "https://registry.npmjs.org/jest/-/jest-26.6.3.tgz"
+  resolved "https://registry.yarnpkg.com/jest/-/jest-26.6.3.tgz#40e8fdbe48f00dfa1f0ce8121ca74b88ac9148ef"
   integrity sha512-lGS5PXGAzR4RF7V5+XObhqz2KZIDUA1yD0DG6pBVmy10eh0ZIXQImRuzocsI/N2XZ1GrLFwTS27In2i2jlpq1Q==
   dependencies:
     "@jest/core" "^26.6.3"
@@ -4444,11 +4444,6 @@ postcss@^8.2.8:
     colorette "^1.2.2"
     nanoid "^3.1.22"
     source-map "^0.6.1"
-
-pragmajs@latest:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/pragmajs/-/pragmajs-0.8.1.tgz#3f6eab0d1cb820461c1393ce255bbcbeaa793779"
-  integrity sha512-0noYj9zLgVLoaZIHmH3uzi92eRQnIbAJemvaugjBGDcZf7P6P5gkSSqEYQPizcFTgMpKiVF/XxKS/UK9+zNMvg==
 
 prelude-ls@^1.2.1:
   version "1.2.1"
