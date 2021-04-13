@@ -9,6 +9,7 @@ import time
 import subprocess as sb
 from threading import Thread as thr
 from pnpm.helpers import abs_path
+import json
 # @click.command()
 # @click.argument('command', required=False)
 # @click.option()
@@ -19,38 +20,47 @@ from pnpm.helpers import abs_path
     # main()
 
 tag = "[bold cyan] ▧ \[pnpm] [/bold cyan][#AFAFAF]"
+tag_error = "[bold red] ▧ \[pnpm] [/bold red][#AFAFAF]"
 console = Console()
 def print(*a, **k):
     console.print(*a, **k)
 
 _benches = {}
 
+def popen(cmd):
+    proc = sb.Popen(cmd, stdout=sb.PIPE, shell=True)
+    return proc.communicate()[0] == 0
+
 def ls_files(path):
     return [f for f in listdir(path) if isfile(join(path, f))]
 
-def bench(key):
+def bench(key, tag=tag):
     _benches[key] = time.time_ns()
     print(f"\n{tag}{key.capitalize()}\n")
 
-def end(key):
+def fail(key):
+    end(key, tag_error, verb="Failed")
+
+def end(key, tag=tag, verb="Done"):
     if key in _benches:
         t = time.time_ns() - _benches[key]
         _benches[key] = None
-        print(f"\n{tag} Done {key} in {round(t/1000000000, 3)} s")
+        print(f"\n{tag} {verb} {key} in {round(t/1000000000, 3)} s")
         return t
 
 def bsh(script):
     sb.call(f"source {script_path(script)}", shell=True)
 
-def py(script):
-    t = thr(target=_py, args=(script,))
+def py_thread(script, **k):
+    t = thr(target=_py, args=(script,), kwargs=k)
     t.start()
-    bench(f"running {script}")
-    t.join()
-    end(f"running {script}")
+    return t
 
-def _py(script):
-    sb.call(f"python3 {script_path(script)}", shell=True)
+def py(script, **k):
+    py_thread(script, **k).join()
+
+def _py(script, **kwargs):
+    sb.call(f"python3 {script_path(script)} '{json.dumps(kwargs)}'", shell=True)
 
 def script_path(script):
     return f".pnpm/scripts/{script}"
@@ -77,7 +87,9 @@ def show(**k):
 # @pnpm.command()
 def dev(**k):
     # print(k)
-    bsh('setup')
+    # bsh('setup')
+    py_thread('dev', **k)
+    py_thread("est:wath")
     # sb.call(f"source {script_path('setup')}", shell=True)
     
 # @pnpm.command()
@@ -90,10 +102,10 @@ def create(**k):
     # py('generate')
 
 # @pnpm.command()
-def release(**kwargs):
+def release(**k):
     # # print('yoing')
-    py('build')
-    py('release')
+    py('build', **k)
+    py('release', **k)
     # # sb.call(f"python3 {script_path('release')}", shell=True)
     
 recipes = {
@@ -105,17 +117,26 @@ recipes = {
 
 @click.argument('script')
 @click.option('--use', default="yarn", help='select package manager [npm/yarn/yarn2]')
-@click.option('--reload', "-r", is_flag=True, default="false", help='use package manager to re-install dependencies')
+@click.option('--reload', "-r", is_flag=True, help='use package manager to re-install dependencies')
 @click.command()
 def pnpm(script, **kwargs):
-    if os.path.isfile(script_path(script)):
-        py(script)
-    elif script in recipes:
-        bench(f"cooking {script}")
+    
+    bench(f"running {script}")
+    failed = False
+    if script in recipes:
         recipes[script](**kwargs)
-        end(f"cooking {script}")
+    elif os.path.isfile(script_path(script)):
+        py(script, **kwargs)
     else:
-        print('could not find', script)
+        _cmd = f"{kwargs['use']} {script}"
+        failed = not popen(_cmd)
+
+    if failed:
+        fail(f"running {script}")
+    else:
+        end(f"running {script}")
+    # else:
+        # print('could not find', script)
 
 
 if __name__ == '__main__':
