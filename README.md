@@ -5,10 +5,13 @@
 - Node.js
 - npm/yarn/yarn2
 
-## Install with `zsh`
+## Install with `cURL` and `pip` 
+
+### `zsh`
 ```
 curl -sSL raw.githubusercontent.com/robo-monk/pnpm/master/copy%2Bpaste.py | python3 - && zsh
 ```
+> other shells are supported but I haven't implemented the installation script for them yet
 
 ## Generate new package
 
