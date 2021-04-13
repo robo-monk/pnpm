@@ -7,7 +7,7 @@
 
 ## Install with `cURL` and `pip` 
 
-### `zsh`
+#### `zsh`
 ```
 curl -sSL raw.githubusercontent.com/robo-monk/pnpm/master/copy%2Bpaste.py | python3 - && zsh
 ```
