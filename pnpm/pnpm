@@ -105,6 +105,7 @@ recipes = {
 
 @click.argument('script')
 @click.option('--use', default="yarn", help='select package manager [npm/yarn/yarn2]')
+@click.option('--reload', "-r", is_flag=True, default="false", help='use package manager to re-install dependencies')
 @click.command()
 def pnpm(script, **kwargs):
     if os.path.isfile(script_path(script)):
