@@ -14,9 +14,6 @@ def params(key=None):
         return _params[key]
     return None
 
-print('yoing')
-print(params())
-
 env = params('env') or "dev"
 pkg_manager = params('use') or config('package_manager')
 
@@ -37,5 +34,6 @@ def run(script):
     sb.call(f"python3 .pnpm/scripts/{script}", shell=True)
 
 def popen(cmd):
-    proc = sb.Popen("yarn test", stdout=sb.PIPE, shell=True)
+    proc = sb.Popen(cmd, stdout=sb.PIPE, shell=True)
     return proc.communicate()[0] == 0
+    

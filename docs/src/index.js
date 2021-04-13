@@ -1,6 +1,8 @@
 export * from "./.build_assets/index" // globalifies pragmajs, exports packages assets
 
 export function docsTest(){
-    console.log("hello from _docs")
+    alert(1a)
+    console.log("hello from docs!")
 }
+
 

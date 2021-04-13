@@ -4445,6 +4445,11 @@ postcss@^8.2.8:
     nanoid "^3.1.22"
     source-map "^0.6.1"
 
+pragmajs@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/pragmajs/-/pragmajs-0.8.1.tgz#3f6eab0d1cb820461c1393ce255bbcbeaa793779"
+  integrity sha512-0noYj9zLgVLoaZIHmH3uzi92eRQnIbAJemvaugjBGDcZf7P6P5gkSSqEYQPizcFTgMpKiVF/XxKS/UK9+zNMvg==
+
 prelude-ls@^1.2.1:
   version "1.2.1"
   resolved "https://registry.npmjs.org/prelude-ls/-/prelude-ls-1.2.1.tgz"

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-control" content="no-cache">
     <title>docs</title>
 </head>
 
@@ -39,11 +40,13 @@ pnpm release
         background: #161616;
     "></div>
     
+
     <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@10.7.1/styles/ocean.min.css">
     <script src="//unpkg.com/@highlightjs/cdn-assets@10.7.1/highlight.min.js"></script>
     
-    <script src="docs/scripts/docs.umd.js"></script>
-    <script src="docs/docs_demo.js"></script>
+    <script src="docs/scripts/docs.umd.js?r={{ random }}"></script>
+    <script src="docs/docs_demo.js?r={{ random }}>"></script>
+    <div> tesgt</div>
 </body>
 
 </html>

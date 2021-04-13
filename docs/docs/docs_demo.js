@@ -1,5 +1,7 @@
 docs.compose() // creates the _page object with all the pragmas defined in the html
 docs.injectStyle('main')
+docs.docsTest()
+console.log(docs)
 
 console.log(_page.displayWrapper)
 console.log(_page.display)

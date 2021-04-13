@@ -143,7 +143,8 @@
     }
 
     function docsTest(){
-        console.log("hello from _docs");
+        alert(1);
+        console.log("hello from docs!");
     }
 
     exports.SVG = SVG;

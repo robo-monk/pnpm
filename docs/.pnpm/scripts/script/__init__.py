@@ -54,3 +54,5 @@ def info(*args, **kwargs):
 def success(*args, **kwargs):
     console.print("\n ", *args, **kwargs, style="cyan")
 
+def status(cmd):
+    return console.status(f"Running [italic bold]{cmd}...", spinner="arrow3", spinner_style="cyan")
