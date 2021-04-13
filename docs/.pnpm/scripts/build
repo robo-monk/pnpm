@@ -4,10 +4,6 @@
 # sb.call("source .docs_env/bin/activate", shell=True)
 from script import * 
 
-
-print("configureation is", config)
-print("params are", params())
-
 def run(sub):
     sb.call(f"python3 .pnpm/{sub}", shell=True)
 
@@ -18,18 +14,20 @@ package_manager = pkg_manager
 
 if not os.path.isdir(".pnpm/icona"):
     icona_repo = "git@github.com:robo-monk/ICONA.git"
-    sb.call(f"git clone {icona_repo} .pnpm/icona", shell=True)
+    shell(f"git clone {icona_repo} .pnpm/icona", shell=True)
 
 
 # build icons
-print(f" [bold] Bundling icons... [/bold]")
+c = spawn(f"Bundling icons...")
 
 run(f"icona/icona {icons_dir}")
-sb.call(f"mv {icons_dir}.json {final}", shell=True)
+shell(f"mv {icons_dir}.json {final}")
+c.done()
 # subprocess.call(f"python .pnpm/icona/icona {icons_dir}", shell=True)
 
-print(f"\n\n[bold cyan] Bundling with package manager: {package_manager} [/bold cyan] \n\n")
+c = spawn(f"Bundling with {package_manager}...")
 # subprocess.call("python3 .pnpm/scripts/sass", shell=True)
 run(f"scripts/sass")
-sb.call(f"{package_manager} run build", shell=True)
+shell(f"{package_manager} run build")
 
+c.done()

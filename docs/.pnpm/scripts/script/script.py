@@ -30,6 +30,9 @@ if params("reload") or env=='prod':
 # def run(sub):
     # sp.call(f"python3 .pnpm/{sub}", shell=True)
 
+def shell(cmd):
+    sb.call(cmd, shell=True)
+
 def run(script):
     sb.call(f"python3 .pnpm/scripts/{script}", shell=True)
 

@@ -6,6 +6,8 @@ from script import *
 import requests
 
 
+c = spawn("Releasing...")
+
 def release():
     sb.call("npm publish", shell=True)
 
@@ -23,14 +25,14 @@ run('build')
 proc = sb.Popen("yarn test", stdout=sb.PIPE, shell=True)
 streamdata = proc.communicate()[0]
 if (proc.returncode == 0):
-    print(f"\n\n[italic green] Tests passed!  [/italic green] \n\n")
+    c.log(f"[italic green] Tests passed!")
 else:
-    print(f"\n\n[bold red] Tests failed!!!!  [/bold red] \n\n")
+    c.warn(f"[bold red] Tests failed!")
 
 
 # set version
 v = requests.get(f"https://registry.npmjs.org/{pkg_name_npm}").json()['dist-tags']['latest']
-console.print(f": Latest version published on npm: {str(v)}", style="dim")
+c.log(f"Latest version published on npm: {str(v)}")
 
 package = {}
 with open('package.json', 'r') as f:
@@ -40,23 +42,25 @@ with open('package.json', 'r') as f:
 pv = package['version']
 
 tag = "bold green" if str(v) == str(pv) else "bold yellow"
-console.print(f": Current local version: {pv}", style=tag)
+c.log(f"[{tag}]Current local version: {pv}")
 
-print(f"[bold]\n\n Input new version please: [/bold]")
-new_version = input("⇝ ")
+new_version = c.input(f"Input new version please: ")
 
 if len(new_version) ==  0:
     new_version = pv
 
-print(f"[italic]  Confirm publish this as version: {new_version} ?")
-if input(f"[y/n] ⇝ ") == 'y':
+
+c.done()
+c = spawn(f"publish this as version: {new_version}")
+if c.input(f"Confirm?", "[y/n]") == 'y':
     package['version'] = new_version
     with open('package.json', 'w') as outfile:
         json.dump(package, outfile, indent=4)
 
     release()
-    print("\n [bold green] Package published succesfully to the NPM repository.")
+    c.done("Package published succesfully to the NPM repository.")
 else:
-    print('\n[bold red] Aborted')
+    c.warn('Aborted')
+    c.done()
 
 

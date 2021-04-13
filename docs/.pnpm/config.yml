@@ -1,1 +1,4 @@
 package_manager: yarn
+
+package_npm_name: docs
+package_name: docs

@@ -20,7 +20,9 @@ def render(file):
 def serve(**e):
     return send_file("../../docs/" + "/".join(e.values()))
           
+global c
 def run_app(port, attempts=10):
+    global c
     if attempts <= 0: return print("Could not start server. Too many ports in use.")
     try:
         attempts -= 1
@@ -31,4 +33,6 @@ def run_app(port, attempts=10):
         run_app(port, attempts)
 
 if __name__ == '__main__':
+    c = spawn("Starting server...")
     run_app(3333)
+    c.done()
