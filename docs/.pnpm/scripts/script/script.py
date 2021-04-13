@@ -36,3 +36,6 @@ def shell(cmd):
 def run(script):
     sb.call(f"python3 .pnpm/scripts/{script}", shell=True)
 
+def popen(cmd):
+    proc = sb.Popen("yarn test", stdout=sb.PIPE, shell=True)
+    return proc.communicate()[0] == 0
