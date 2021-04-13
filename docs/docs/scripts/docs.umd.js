@@ -143,7 +143,6 @@
     }
 
     function docsTest(){
-        alert(1);
         console.log("hello from docs!");
     }
 

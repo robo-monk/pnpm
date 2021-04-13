@@ -1,7 +1,5 @@
 #!/usr/local/bin/python3
-# arguments: -c
-# from config import config
-# sb.call("source .docs_env/bin/activate", shell=True)
+
 from script import * 
 
 def run(sub):

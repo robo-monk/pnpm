@@ -26,11 +26,15 @@ class spawn():
         # pipe = "┃"
         warn(f"[dim white]", "".join(a), **k)
 
-    def done(self, msg=None):
+    def fail(self, msg="Fail"):
+        self.log()
+        self.done(msg, "red")
+
+    def done(self, msg=None, color="green"):
         if msg is None:
             self.log()
             msg = "Done" 
-        console.print("[dim]┗", f"[bold green]{msg}", f"in {round(time.time()-self.start, 3)} seconds\n")
+        console.print("[dim]┗", f"[bold {color}]{msg}", f"in {round(time.time()-self.start, 3)} seconds\n")
     
     def input(self, msg=None, options=""):
         if msg is None:

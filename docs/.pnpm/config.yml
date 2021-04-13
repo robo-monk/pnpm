@@ -1,4 +1,6 @@
-package_manager: yarn
+manager: yarn
 
-package_npm_name: docs
+package_npm_name: docs_test_pnpm
 package_name: docs
+
+test?: no # or yes
