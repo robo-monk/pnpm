@@ -1,24 +1,14 @@
 #!/usr/local/bin/python3
 pkg_name = "docs"
+pkg_name_npm = "docs"
 
-import subprocess as sp
-
-
-from _script import config
+from script import *
 import requests
-import json
-import os
-import sys
-from rich import console as _console, print, inspect
 
-
-def run(script):
-    sp.call(f"python3 .pnpm/scripts/{script}", shell=True)
 
 def release():
-    sp.call("npm publish", shell=True)
+    sb.call("npm publish", shell=True)
 
-console = _console.Console()
 package_manager = os.environ.get(f"{pkg_name}_PKG") or "yarn"
 
 
@@ -28,12 +18,9 @@ if len(sys.argv) > 1:
 
 os.environ[f"{pkg_name}_ENV"] = 'production'
 run('build')
-# sp.call("python watchtower", shell=True)
-
 
 # test
-
-proc = sp.Popen("yarn test", stdout=sp.PIPE, shell=True)
+proc = sb.Popen("yarn test", stdout=sb.PIPE, shell=True)
 streamdata = proc.communicate()[0]
 if (proc.returncode == 0):
     print(f"\n\n[italic green] Tests passed!  [/italic green] \n\n")
@@ -42,7 +29,7 @@ else:
 
 
 # set version
-v = requests.get(f"https://registry.npmjs.org/{pkg_name}").json()['dist-tags']['latest']
+v = requests.get(f"https://registry.npmjs.org/{pkg_name_npm}").json()['dist-tags']['latest']
 console.print(f": Latest version published on npm: {str(v)}", style="dim")
 
 package = {}

@@ -1,5 +1,7 @@
 #!/usr/local/bin/python3
 
+from script import *
+
 from flask import Flask, render_template, send_file
 app = Flask(__name__, template_folder="../../", static_folder="../../")
 
@@ -18,5 +20,15 @@ def render(file):
 def serve(**e):
     return send_file("../../docs/" + "/".join(e.values()))
           
+def run_app(port, attempts=10):
+    if attempts <= 0: return print("Could not start server. Too many ports in use.")
+    try:
+        attempts -= 1
+        app.run(debug=True, port=port)
+    except:
+        warn(f"port {port} already in use. Trying next...")
+        port += 1
+        run_app(port, attempts)
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    run_app(3333)

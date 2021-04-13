@@ -1,4 +1,13 @@
-from .config import config
-from .script import params, env, pkg_manager, run
+from rich import console as _console, print, inspect
+console = _console.Console()
 
-print("package manager")
+from .config import config
+from .script import * 
+
+
+import json
+import os
+import sys
+
+def warn(*args, **kwargs):
+    console.print(" × ", *args, "🔫 ", **kwargs, style="#FF851B bold")

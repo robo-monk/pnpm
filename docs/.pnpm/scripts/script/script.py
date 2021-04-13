@@ -14,6 +14,8 @@ def params(key=None):
         return _params[key]
     return None
 
+print('yoing')
+print(params())
 
 env = params('env') or "dev"
 pkg_manager = params('use') or config('package_manager')
@@ -25,5 +27,9 @@ if params("reload") or env=='prod':
 
 
 
-def run(sub):
-    sp.call(f"python3 .pnpm/{sub}", shell=True)
+# def run(sub):
+    # sp.call(f"python3 .pnpm/{sub}", shell=True)
+
+def run(script):
+    sb.call(f"python3 .pnpm/scripts/{script}", shell=True)
+
