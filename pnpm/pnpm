@@ -127,9 +127,6 @@ def release(**k):
     py('release', **k)
     # # sb.call(f"python3 {script_path('release')}", shell=True)
     
-def test(**k):
-
-
 recipes = {
     "dev": dev,
     "release": release,
