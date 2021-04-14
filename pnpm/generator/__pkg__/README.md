@@ -1,43 +1,36 @@
-# The Lector Experience
-![npm-size](https://img.shields.io/npm/v/lectorjs?style=flat-square)
-![npm-size](https://img.shields.io/npm/l/lectorjs?style=flat-square)
-![npm-size](https://img.shields.io/github/commit-activity/m/robo-monk/lector?style=flat-square)
-![npm-size](https://img.shields.io/npm/dw/lectorjs?style=flat-square)
+# __pkg__ 
+![npm-size](https://img.shields.io/npm/v/__pkg__?style=flat-square)
+![npm-size](https://img.shields.io/github/commit-activity/m/__git_username__/__pkg?style=flat-square)
+![npm-size](https://img.shields.io/npm/dw/__pkg__?style=flat-square)
 
-### [ 🚀 Demo ](https://robo-monk.github.io/lector)
+### [ 🚀 Demo ](https://__git_username__.github.io/__pkg__)
 
-Hi
-
+* made with ❤ ️by __git_username__ *
 
 ## First time:
 
 ```bash
-git clone git@github.com:robo-monk/lector.git
+git clone git@github.com:__git_username__/__pkg__.git
 cd __pkg__
-yarn install
+pnpm dev -r # reload dependencies
 ```
+
 * Python 3 required (prefferably installed with `brew`)
-* virtualenv (`pip install virtualenv`)
+* Pragmatic Node Manager (pnpm) 
+    > install curl -sSL raw.githubusercontent.com/robo-monk/pnpm/master/copy%2Bpaste.py | python3 - && zsh
 
-## Run this to compile the code when you make changes:
-
+## Developing 
 Depends on your package manager (my recommendation would be `yarn`)
-
 ```bash
-source setup yarn
+pnpm dev # will start a server and watch the code. Will
+         # also check whether tests pass if configed so;
 ```
 
 ```bash
-source setup npm
+pnpm release # will release the package to npm repository
+
+# fast release with no confirmation
+pnpm release --prepatch # will release the package directly after
+                        # prepatching the version number 
+pnpm release --patch 
 ```
-
-# Install
-
-### Use npm or yarn:
-```bash
-yarn install __pkg__
-```
-
-## Set up
-
-Blah

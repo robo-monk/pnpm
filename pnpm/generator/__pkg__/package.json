@@ -5,7 +5,7 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "git://github.com/robo-monk/lector.git"
+        "url": "git://github.com/__git_username__/__pkg__.git"
     },
     "source": "src/index.js",
     "main": "dist/__pkg__.cjs.js",
@@ -44,15 +44,18 @@
         "dev-style": "nodemon -w 'src/styles/**' -e css,scss --exec python3 .pnpm/scripts/sass",
         "dev": "nodemon -w 'src/' -e css,scss,js,svg --exec python3 .pnpm/scripts/build",
         "dev-rollup": "rollup -c -w",
-        "lint": "yarn run eslint src"
+        "lint": "yarn run eslint src",
+        "test": "jest",
+        "test:watch": "jest --watchAll"
     },
     "dependencies": {
         "pragmajs": "latest"
     },
     "bugs": {
-        "url": ""
+        "url": "https://github.com/__git_username__/__pkg__/issues"
     },
-    "homepage": "",
+    "homepage": "https://robo-monk.github.io/__pkg__/",
+
     "directories": {
         "doc": "docs",
         "test": "test"
