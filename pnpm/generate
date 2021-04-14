@@ -21,6 +21,10 @@ from pnpm.helpers import abs_path
 # def abs_path(sub=''):
     # return _path  + sub
 
+regex = r"user.name=([^ \n]+)"
+data = sb.check_output('git config --list', shell=True).decode('utf-8')
+username = (re.search(regex, data).group(1))
+
 def rel_path(sub=''):
     return os.getcwd() + sub
 
@@ -66,7 +70,10 @@ def walk(walk_path):
 
     
 def pkgify(string):
-    return string.replace("__pkg_manager__", pkgmngr).replace("__pkg__art", pkg).replace("__pkg__", pkg)
+    return string.replace("__pkg_manager__", pkgmngr)
+                 .replace("__pkg__art", pkg)
+                 .replace("__pkg__", pkg)
+                 .replace("__git_username__", username)
 
 def read(file):
     content = None
@@ -91,13 +98,14 @@ def prog(msg):
 
 
 pkg = "untitled"
-pkgmngr = inp("Specify package manager:") 
-
 if len(sys.argv) < 2:
     pkg = inp("Specify package name:")
 else:
     pkg = sys.argv[1]
-    
+
+pkgmngr = inp("Specify package manager:") 
+
+   
 # pkg = os.getcwd() + '/' + pkg 
 
 os.mkdir(pkg)
