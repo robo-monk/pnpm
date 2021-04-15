@@ -121,15 +121,14 @@ def create(**k):
     # py('generate')
 
 # @pnpm.command()
-def release(**k):
+# def release(**k):
     # # print('yoing')
-    py('build', **k)
-    py('release', **k)
+    # py('build', **k)
+    # py('release', **k)
     # # sb.call(f"python3 {script_path('release')}", shell=True)
     
 recipes = {
     "dev": dev,
-    "release": release,
     "show": show,
     "create": create
 }

@@ -70,9 +70,9 @@ def walk(walk_path):
 
     
 def pkgify(string):
-    return string.replace("__pkg_manager__", pkgmngr)
-                 .replace("__pkg__art", pkg)
-                 .replace("__pkg__", pkg)
+    return string.replace("__pkg_manager__", pkgmngr)   \
+                 .replace("__pkg__art", pkg)            \
+                 .replace("__pkg__", pkg)               \
                  .replace("__git_username__", username)
 
 def read(file):

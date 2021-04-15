@@ -1,11 +1,13 @@
-# __pkg__ 
 ![npm-size](https://img.shields.io/npm/v/__pkg__?style=flat-square)
-![npm-size](https://img.shields.io/github/commit-activity/m/__git_username__/__pkg?style=flat-square)
+![npm-size](https://img.shields.io/github/commit-activity/m/__git_username__/__pkg__?style=flat-square)
 ![npm-size](https://img.shields.io/npm/dw/__pkg__?style=flat-square)
 
-### [ 🚀 Demo ](https://__git_username__.github.io/__pkg__)
+# __pkg__ 
+> made with ❤ ️by __git_username__
 
-* made with ❤ ️by __git_username__ *
+
+### [ Demo ](https://__git_username__.github.io/__pkg__)
+
 
 ## First time:
 
