@@ -21,8 +21,7 @@ if len(sys.argv) > 1:
     package_manager = sys.argv[1]
 
 
-os.environ[f"{pkg_name}_ENV"] = 'production'
-run('build')
+# os.environ[f"{pkg_name}_ENV"] = 'production'
 
 # test
 
@@ -47,13 +46,20 @@ else:
 
 
 package = {}
+def get_from_package(key):
+    with open('package.json', 'r') as f:
+        package = json.load(f)
+        if key is None: return package
+        return package[key]
+
+
+
 with open('package.json', 'r') as f:
     package = json.load(f)
 
 pv = package['version']
 tag = "bold green" if str(v) == str(pv) else "bold yellow"
 c.log(f"[{tag}]Current local version: {pv}")
-
 
 print(params())
 skip_conf = False
@@ -76,6 +82,7 @@ else:
     c.done()
     c = spawn(f"publish this as version: {new_version}")
 
+pnpm("build --env production")
 if not skip_conf: 
     if c.input(f"Confirm?", "[y/n]") == 'y':
         package['version'] = new_version
@@ -89,3 +96,7 @@ if not skip_conf:
 
 release()
 c.done("Package published succesfully to the NPM repository.")
+
+c = spawn("Commiting to git")
+shell(f"git add . && git commit -m 'release version {get_from_package('version')}'")
+c.done()
